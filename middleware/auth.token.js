@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/user.js";
 
 const ACCESS_TOKEN_MAX_AGE =  30 * 1000;
-const REFRESH_TOKEN_MAX_AGE =  10 * 60 * 1000;
+const REFRESH_TOKEN_MAX_AGE =  60 * 60 * 1000;
 
 const cookieOptions = (maxAge) => ({
   httpOnly: true,
@@ -63,4 +63,10 @@ export const checkUser = async (req, res, next) => {
     res.clearCookie("refreshToken", cookieOptions(0));
     return res.redirect("/login");
   }
+};
+
+// middleware/checkLogin.js
+export const checkLogin = (req, res, next) => {
+  res.locals.isLoggedIn = req.cookies.accessToken;
+  next();
 };

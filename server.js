@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import { z } from 'zod';
 import connectDB from './config/db.js';
 import { router } from './routes/agency.routes.js';
+import { checkLogin } from './middleware/auth.token.js';
 
 
 connectDB();
@@ -35,13 +36,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(
     path.join(import.meta.dirname, "public")
 ));
+
+// check user login
+app.use(checkLogin);
+
 app.use(router);
+
 
 
 // 404 Handler (for non-existing routes)
 app.use((req, res, next) => {
     res.status(404).send(`Route not found: ${req.url}`);
 });
+
 
 // Server Listen
 app.listen(env.PORT, () => {

@@ -15,13 +15,16 @@
     </div>
 
     <div class="nav-cta">
-      <a href="/login" class="nav-btn nav-btn-outline"> Log In </a>
-
-      <a href="/signup" class="nav-btn nav-btn-primary"> sign up → </a>
-
-      <form action="/logout" method="POST">
-        <button type="submit" class="nav-btn nav-btn-outline">Log out</button>
-      </form>
+              <% if (isLoggedIn) { %>
+          <form action="/logout" method="POST">
+            <button type="submit" class="nav-btn nav-btn-outline">
+              Log out
+            </button>
+          </form>
+        <% } else { %>
+          <a href="/login" class="nav-btn nav-btn-outline">Log In</a>
+          <a href="/signup" class="nav-btn nav-btn-primary">Sign up →</a>
+        <% } %>
     </div>
   </div>
 </nav>

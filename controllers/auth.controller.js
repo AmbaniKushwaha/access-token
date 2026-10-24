@@ -2,7 +2,7 @@ import { User } from "../models/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 const ACCESS_TOKEN_MAX_AGE = 30 * 1000;
-const REFRESH_TOKEN_MAX_AGE = 10 * 60 * 1000;
+const REFRESH_TOKEN_MAX_AGE = 60 * 60 * 1000;
 
 const cookieOptions = (maxAge) => ({
   httpOnly: true,
@@ -71,7 +71,7 @@ export const PostLoginPage = async (req, res, next) => {
     const refreshToken = jwt.sign(
       { _id: userInfo._id },
       process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: "10m" },
+      { expiresIn: "60m" },
     );
 
     userInfo.refreshToken = refreshToken;
@@ -122,7 +122,7 @@ export const PostSignupPage = async (req, res, next) => {
     const refreshToken = jwt.sign(
       { _id: user._id },
       process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: "10m" },
+      { expiresIn: "60m" },
     );
 
     user.refreshToken = refreshToken;
